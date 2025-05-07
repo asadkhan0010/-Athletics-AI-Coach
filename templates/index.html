@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Prediction</title>
+</head>
+<body>
+    <h1>Enter Data to Get Prediction</h1>
+
+    <form action="/predict" method="post">
+        <label for="Target_Pace">Target Pace:</label><br>
+        <input type="text" id="Target_Pace" name="Target_Pace"><br><br>
+
+        <label for="Actual_Pace">Actual Pace:</label><br>
+        <input type="text" id="Actual_Pace" name="Actual_Pace"><br><br>
+
+        <label for="Target_Distance">Target Distance:</label><br>
+        <input type="text" id="Target_Distance" name="Target_Distance"><br><br>
+
+        <label for="Actual_Distance">Actual Distance:</label><br>
+        <input type="text" id="Actual_Distance" name="Actual_Distance"><br><br>
+
+        <label for="Elevation_Gain">Elevation Gain:</label><br>
+        <input type="text" id="Elevation_Gain" name="Elevation_Gain"><br><br>
+
+        <label for="Consistency_Score">Consistency Score:</label><br>
+        <input type="text" id="Consistency_Score" name="Consistency_Score"><br><br>
+
+        <input type="submit" value="Get Prediction">
+    </form>
+
+</body>
+</html>
