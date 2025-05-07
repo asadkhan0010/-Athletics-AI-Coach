@@ -1,41 +1,33 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, render_template
 import pickle
-import pandas as pd
-from sklearn.preprocessing import StandardScaler
 
 app = Flask(__name__)
 
-# Load the saved model and scaler using pickle
-with open('model.pkl', 'rb') as model_file:
-    model = pickle.load(model_file)
-
-with open('scaler.pkl', 'rb') as scaler_file:
-    scaler = pickle.load(scaler_file)
+# Load your trained machine learning model
+# Example: model = pickle.load(open('model.pkl', 'rb'))
 
 @app.route('/')
-def index():
-    return render_template('index.html')
+def home():
+    return render_template('/templates/index.html')  # This will render your HTML form
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    try:
-        # Get input data from the form
-        data = request.form.to_dict()
+    # Get input values from the form
+    target_pace = float(request.form['Target_Pace'])
+    actual_pace = float(request.form['Actual_Pace'])
+    target_distance = float(request.form['Target_Distance'])
+    actual_distance = float(request.form['Actual_Distance'])
+    elevation_gain = float(request.form['Elevation_Gain'])
+    consistency_score = float(request.form['Consistency_Score'])
 
-        # Convert to DataFrame for model prediction
-        features = pd.DataFrame([data])
-        
-        # Apply scaling to the input features
-        features_scaled = scaler.transform(features)
+    # Prepare the data in the format that your model expects
+    input_data = [[target_pace, actual_pace, target_distance, actual_distance, elevation_gain, consistency_score]]
+    
+    # Use the model to predict
+    prediction = model.predict(input_data)  # Replace with your model's predict function
+    
+    # Render the result page and display the prediction
+    return render_template('/templates/result.html', prediction=prediction[0])
 
-        # Get prediction from the model
-        prediction = model.predict(features_scaled)
-
-        # Return the prediction
-        return jsonify({'prediction': prediction[0]})
-
-    except Exception as e:
-        return jsonify({'error': str(e)})
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)
